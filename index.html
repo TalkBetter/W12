@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 12 Listening Practice</title>
+  <style>
+    body {
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .section {
+      max-width: 900px;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .card {
+      border-radius: 10px;
+      padding: 15px 18px;
+      margin-bottom: 16px;
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
+    }
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .title-row span.label {
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+    .subtitle {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    .lines {
+      margin-left: 8px;
+      margin-bottom: 8px;
+    }
+    .en {
+      font-weight: bold;
+    }
+    .zh {
+      color: #444;
+      margin-bottom: 6px;
+    }
+    button.play-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #1976d2;
+      background: #2196f3;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    button.play-btn:hover {
+      background: #1976d2;
+    }
+    .controls {
+      max-width: 900px;
+      margin: 10px auto 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      justify-content: center;
+    }
+    select {
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .now-playing {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Week 12 Listening Practice</h1>
+
+<!-- 播放速度 -->
+<div class="controls">
+  <span>Playback speed 播放速度：</span>
+  <select id="speedSelect">
+    <option value="1">1.0×</option>
+    <option value="0.8">0.8× (慢一點)</option>
+  </select>
+</div>
+<div class="now-playing" id="nowPlaying">Now playing: (none)</div>
+
+<audio id="audioPlayer"></audio>
+
+<!-- ---------------------- 星期一 --------------------------- -->
+<div class="section">
+  <h2>星期一 — Community Helpers</h2>
+
+  <!-- Firefighter -->
+  <div class="card">
+    <div class="title-row">
+      <span class="label">🔥 Firefighter 消防員</span>
+      <button class="play-btn" data-audio="Firefighter.mp3">▶ Play Firefighter</button>
+    </div>
+    <div class="subtitle">Speaker 1 & Speaker 2</div>
+    <div class="lines">
+      <div class="en">Speaker 1: I work in a fire station.</div>
+      <div class="zh">我在消防隊工作。</div>
+
+      <div class="en">Speaker 1: I fight fires.</div>
+      <div class="zh">我對抗火災。</div>
+
+      <div class="en">Speaker 1: I drive a big red truck.</div>
+      <div class="zh">我開一台大紅色消防車。</div>
+
+      <div class="en">Speaker 1: Who am I?</div>
+      <div class="zh">我是誰？</div>
+
+      <br>
+      <div class="en">Speaker 2: You are a firefighter.</div>
+      <div class="zh">你是消防員。</div>
+    </div>
+  </div>
+
+  <!-- Police Officer -->
+  <div class="card">
+    <div class="title-row">
+      <span class="label">🚓 Police Officer 警察</span>
+      <button class="play-btn" data-audio="Police Officer.mp3">▶ Play Police Officer</button>
+    </div>
+    <div class="subtitle">Speaker 1 & Speaker 2</div>
+    <div class="lines">
+      <div class="en">Speaker 1: I work in a police station.</div>
+      <div class="zh">我在警察局工作。</div>
+
+      <div class="en">Speaker 1: I keep people safe.</div>
+      <div class="zh">我保護大家的安全。</div>
+
+      <div class="en">Speaker 1: I wear a blue uniform.</div>
+      <div class="zh">我穿著藍色制服。</div>
+
+      <div class="en">Speaker 1: Who am I?</div>
+      <div class="zh">我是誰？</div>
+
+      <br>
+      <div class="en">Speaker 2: You are a police officer.</div>
+      <div class="zh">你是警察。</div>
+    </div>
+  </div>
+
+  <!-- Chef -->
+  <div class="card">
+    <div class="title-row">
+      <span class="label">🍳 Chef 廚師</span>
+      <button class="play-btn" data-audio="Chef.mp3">▶ Play Chef</button>
+    </div>
+    <div class="subtitle">Speaker 1 & Speaker 2</div>
+    <div class="lines">
+      <div class="en">Speaker 1: I work in a kitchen.</div>
+      <div class="zh">我在廚房工作。</div>
+
+      <div class="en">Speaker 1: I cook delicious food.</div>
+      <div class="zh">我煮美味的食物。</div>
+
+      <div class="en">Speaker 1: I wear a tall white hat.</div>
+      <div class="zh">我戴著高高的白帽子。</div>
+
+      <div class="en">Speaker 1: Who am I?</div>
+      <div class="zh">我是誰？</div>
+
+      <br>
+      <div class="en">Speaker 2: You are a chef.</div>
+      <div class="zh">你是廚師。</div>
+    </div>
+  </div>
+
+  <!-- Teacher -->
+  <div class="card">
+    <div class="title-row">
+      <span class="label">🏫 Teacher 老師</span>
+      <button class="play-btn" data-audio="Teacher.mp3">▶ Play Teacher</button>
+    </div>
+    <div class="subtitle">Speaker 1 & Speaker 2</div>
+    <div class="lines">
+      <div class="en">Speaker 1: I work in a school.</div>
+      <div class="zh">我在學校工作。</div>
+
+      <div class="en">Speaker 1: I teach students.</div>
+      <div class="zh">我教學生。</div>
+
+      <div class="en">Speaker 1: I write on the board.</div>
+      <div class="zh">我在黑板上寫字。</div>
+
+      <div class="en">Speaker 1: Who am I?</div>
+      <div class="zh">我是誰？</div>
+
+      <br>
+      <div class="en">Speaker 2: You are a teacher.</div>
+      <div class="zh">你是老師。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------------------- 星期三 --------------------------- -->
+<div class="section">
+  <h2>星期三 — 4W Trip Conversation</h2>
+
+  <div class="card">
+    <div class="title-row">
+      <span class="label">🎧 4W 動物園校外教學</span>
+      <button class="play-btn" data-audio="4w.mp3">▶ Play 4W Trip</button>
+    </div>
+
+    <div class="lines">
+      <div class="en">Speaker 1: Where did you go?</div>
+      <div class="zh">你去了哪裡？</div>
+
+      <div class="en">Speaker 2: I went to the zoo.</div>
+      <div class="zh">我去了動物園。</div><br>
+
+      <div class="en">Speaker 1: What did you do?</div>
+      <div class="zh">你做了什麼？</div>
+
+      <div class="en">Speaker 2: I played games and took pictures with my friends.</div>
+      <div class="zh">我玩遊戲並和朋友一起拍照。</div><br>
+
+      <div class="en">Speaker 1: Who did you see?</div>
+      <div class="zh">你看到了誰？</div>
+
+      <div class="en">Speaker 2: I saw my friends, my teacher, and some parents.</div>
+      <div class="zh">我看到朋友、老師和一些家長。</div><br>
+
+      <div class="en">Speaker 1: How did you feel on the trip?</div>
+      <div class="zh">你在旅途中感覺如何？</div>
+
+      <div class="en">Speaker 2: I felt very happy and excited.</div>
+      <div class="zh">我感到非常開心又興奮。</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const player = document.getElementById('audioPlayer');
+  const speedSelect = document.getElementById('speedSelect');
+  const nowPlaying = document.getElementById('nowPlaying');
+
+  speedSelect.addEventListener('change', function () {
+    player.playbackRate = parseFloat(this.value);
+  });
+
+  document.querySelectorAll('.play-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const file = btn.getAttribute('data-audio');
+      const speed = parseFloat(speedSelect.value);
+
+      const currentSrc = player.src.split('/').pop();
+      if (currentSrc === file) {
+        if (player.paused) player.play();
+        else player.pause();
+      } else {
+        player.src = file;
+        player.playbackRate = speed;
+        player.play();
+      }
+
+      nowPlaying.textContent = 'Now playing: ' + file;
+    });
+  });
+
+  player.addEventListener('ended', () => {
+    nowPlaying.textContent = 'Now playing: (none)';
+  });
+</script>
+
+</body>
+</html>
