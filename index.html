@@ -114,6 +114,46 @@
       margin-top: 4px;
     }
 
+    /* 每張卡片自己的進度條 */
+    .progress-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+    .progressBar {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      background: #ddd;
+      outline: none;
+    }
+    .progressBar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #2196f3;
+      cursor: pointer;
+    }
+    .progressBar::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #2196f3;
+      cursor: pointer;
+      border: none;
+    }
+    .timeLabel {
+      min-width: 110px;
+      text-align: right;
+      color: #555;
+    }
+
     /* 手機小螢幕優化 */
     @media (max-width: 600px) {
       body {
@@ -138,6 +178,9 @@
       .lines {
         margin-left: 0;
       }
+      .progress-wrapper {
+        flex-direction: row;
+      }
     }
   </style>
 </head>
@@ -155,6 +198,7 @@
 </div>
 <div class="now-playing" id="nowPlaying">Now playing: (none)</div>
 
+<!-- 共用 audio -->
 <audio id="audioPlayer"></audio>
 
 <!-- ---------------------- 星期一 --------------------------- -->
@@ -168,6 +212,13 @@
       <button class="play-btn" data-audio="Firefighter.mp3">▶ Play Firefighter</button>
     </div>
     <div class="subtitle">Speaker 1 & Speaker 2</div>
+
+    <!-- 這張卡片自己的進度條 -->
+    <div class="progress-wrapper">
+      <input type="range" class="progressBar" min="0" max="100" value="0">
+      <span class="timeLabel">0:00 / 0:00</span>
+    </div>
+
     <div class="lines">
       <div class="en">Speaker 1: I work in a fire station.</div>
       <div class="zh">我在消防隊工作。</div>
@@ -194,6 +245,12 @@
       <button class="play-btn" data-audio="Police Officer.mp3">▶ Play Police Officer</button>
     </div>
     <div class="subtitle">Speaker 1 & Speaker 2</div>
+
+    <div class="progress-wrapper">
+      <input type="range" class="progressBar" min="0" max="100" value="0">
+      <span class="timeLabel">0:00 / 0:00</span>
+    </div>
+
     <div class="lines">
       <div class="en">Speaker 1: I work in a police station.</div>
       <div class="zh">我在警察局工作。</div>
@@ -220,6 +277,12 @@
       <button class="play-btn" data-audio="Chef.mp3">▶ Play Chef</button>
     </div>
     <div class="subtitle">Speaker 1 & Speaker 2</div>
+
+    <div class="progress-wrapper">
+      <input type="range" class="progressBar" min="0" max="100" value="0">
+      <span class="timeLabel">0:00 / 0:00</span>
+    </div>
+
     <div class="lines">
       <div class="en">Speaker 1: I work in a kitchen.</div>
       <div class="zh">我在廚房工作。</div>
@@ -246,6 +309,12 @@
       <button class="play-btn" data-audio="Teacher.mp3">▶ Play Teacher</button>
     </div>
     <div class="subtitle">Speaker 1 & Speaker 2</div>
+
+    <div class="progress-wrapper">
+      <input type="range" class="progressBar" min="0" max="100" value="0">
+      <span class="timeLabel">0:00 / 0:00</span>
+    </div>
+
     <div class="lines">
       <div class="en">Speaker 1: I work in a school.</div>
       <div class="zh">我在學校工作。</div>
@@ -274,6 +343,11 @@
     <div class="title-row">
       <span class="label">🎧 4W 動物園校外教學</span>
       <button class="play-btn" data-audio="4w.mp3">▶ Play 4W Trip</button>
+    </div>
+
+    <div class="progress-wrapper">
+      <input type="range" class="progressBar" min="0" max="100" value="0">
+      <span class="timeLabel">0:00 / 0:00</span>
     </div>
 
     <div class="lines">
@@ -309,30 +383,107 @@
   const speedSelect = document.getElementById('speedSelect');
   const nowPlaying = document.getElementById('nowPlaying');
 
+  let currentCard = null; // 目前正在播放的那張卡片
+
+  function formatTime(sec) {
+    if (!isFinite(sec)) return "0:00";
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ":" + (s < 10 ? "0" + s : s);
+  }
+
   speedSelect.addEventListener('change', function () {
     player.playbackRate = parseFloat(this.value);
   });
 
+  // 找出某張卡片的進度條與時間標籤
+  function getCardUI(card) {
+    if (!card) return {};
+    return {
+      progressBar: card.querySelector('.progressBar'),
+      timeLabel: card.querySelector('.timeLabel')
+    };
+  }
+
+  // 播放按鈕
   document.querySelectorAll('.play-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const file = btn.getAttribute('data-audio');
       const speed = parseFloat(speedSelect.value);
+      const card = btn.closest('.card');
+
+      // 如果切換到另一張卡片，把前一張歸零
+      if (currentCard && currentCard !== card) {
+        const { progressBar: prevPB, timeLabel: prevTL } = getCardUI(currentCard);
+        if (prevPB) prevPB.value = 0;
+        if (prevTL) prevTL.textContent = "0:00 / 0:00";
+      }
 
       const currentSrc = player.src.split('/').pop();
-      if (currentSrc === file) {
-        if (player.paused) player.play();
-        else player.pause();
+      if (currentSrc === file && currentCard === card) {
+        // 同一張卡，做播放/暫停切換
+        if (player.paused) {
+          player.play();
+        } else {
+          player.pause();
+        }
       } else {
+        // 換新的音檔或換卡片
+        currentCard = card;
         player.src = file;
         player.playbackRate = speed;
         player.play();
+
+        const { progressBar, timeLabel } = getCardUI(currentCard);
+        if (progressBar) progressBar.value = 0;
+        if (timeLabel) timeLabel.textContent = "0:00 / 0:00";
       }
 
       nowPlaying.textContent = 'Now playing: ' + file;
     });
   });
 
+  // 載入音檔後，更新總長度顯示
+  player.addEventListener('loadedmetadata', () => {
+    if (!currentCard) return;
+    const { timeLabel } = getCardUI(currentCard);
+    if (!timeLabel) return;
+    const total = player.duration || 0;
+    timeLabel.textContent = formatTime(player.currentTime) + " / " + formatTime(total);
+  });
+
+  // 播放中更新對應卡片的進度條與時間
+  player.addEventListener('timeupdate', () => {
+    if (!currentCard) return;
+    if (!isFinite(player.duration) || player.duration === 0) return;
+
+    const { progressBar, timeLabel } = getCardUI(currentCard);
+    if (!progressBar || !timeLabel) return;
+
+    const percent = (player.currentTime / player.duration) * 100;
+    progressBar.value = percent;
+    timeLabel.textContent = formatTime(player.currentTime) + " / " + formatTime(player.duration);
+  });
+
+  // 拉動進度條：只對目前這張卡片有效
+  document.querySelectorAll('.progressBar').forEach(pb => {
+    pb.addEventListener('input', () => {
+      if (!currentCard) return;
+      const card = pb.closest('.card');
+      if (card !== currentCard) return; // 只允許控制正在播放的那張
+      if (!isFinite(player.duration) || player.duration === 0) return;
+
+      const percent = pb.value;
+      const newTime = (percent / 100) * player.duration;
+      player.currentTime = newTime;
+    });
+  });
+
   player.addEventListener('ended', () => {
+    if (!currentCard) return;
+    const { progressBar, timeLabel } = getCardUI(currentCard);
+    if (progressBar) progressBar.value = 0;
+    if (timeLabel) timeLabel.textContent = "0:00 / " + formatTime(player.duration || 0);
     nowPlaying.textContent = 'Now playing: (none)';
   });
 </script>
