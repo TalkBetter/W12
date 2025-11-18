@@ -3,89 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <title>Week 12 Listening Practice</title>
+  <!-- 手機正確縮放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       font-family: Arial, "Microsoft JhengHei", sans-serif;
       background: #f5f5f5;
       margin: 0;
-      padding: 20px;
-      line-height: 1.6;
+      padding: 16px;
+      line-height: 1.7;
+      font-size: 18px; /* 整體字體放大 */
     }
     h1, h2 {
       text-align: center;
+      margin: 10px 0;
     }
+    h1 {
+      font-size: 1.6rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+    }
+
     .section {
       max-width: 900px;
-      margin: 20px auto;
+      margin: 16px auto;
       background: #ffffff;
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
+
     .card {
-      border-radius: 10px;
-      padding: 15px 18px;
-      margin-bottom: 16px;
+      border-radius: 12px;
+      padding: 14px 14px;
+      margin-bottom: 14px;
       background: #fafafa;
       border: 1px solid #e0e0e0;
     }
+
     .title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
       margin-bottom: 8px;
     }
     .title-row span.label {
       font-weight: bold;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
+
     .subtitle {
       color: #555;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       margin-bottom: 8px;
     }
+
     .lines {
-      margin-left: 8px;
-      margin-bottom: 8px;
+      margin-left: 4px;
+      margin-bottom: 4px;
     }
     .en {
       font-weight: bold;
+      font-size: 1rem;     /* 英文稍微大一點 */
     }
     .zh {
       color: #444;
       margin-bottom: 6px;
+      font-size: 0.95rem;  /* 中文也加大 */
     }
+
     button.play-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
       border: 1px solid #1976d2;
       background: #2196f3;
       color: #fff;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 1rem;
+      min-width: 140px;
     }
     button.play-btn:hover {
       background: #1976d2;
     }
+
     .controls {
       max-width: 900px;
       margin: 10px auto 0;
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       justify-content: center;
+      flex-wrap: wrap;
     }
+
     select {
-      padding: 4px 6px;
-      border-radius: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
       border: 1px solid #ccc;
+      font-size: 0.95rem;
     }
+
     .now-playing {
       text-align: center;
       font-size: 0.9rem;
       color: #666;
       margin-top: 4px;
+    }
+
+    /* 手機小螢幕優化 */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+        font-size: 18px;
+      }
+      .section {
+        padding: 12px;
+        margin: 10px auto;
+      }
+      .card {
+        padding: 12px;
+      }
+      .title-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      button.play-btn {
+        width: 100%;       /* 按鈕整排，好按 */
+        text-align: center;
+      }
+      .lines {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
